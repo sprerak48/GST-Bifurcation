@@ -63,6 +63,13 @@ npm start
 
 Serve the built `client/dist` folder with a static host (e.g. nginx) or use the Express server to serve it.
 
+### Deploy to Vercel
+
+The app deploys to Vercel with both frontend and API (serverless). After deployment:
+
+1. Add **GEMINI_API_KEY** in Vercel project settings → Environment Variables (for AI assistant).
+2. **Note:** Vercel has a 4.5MB request body limit. CSV files larger than that may fail to upload; use smaller exports or run locally for big files.
+
 ## Input Data
 
 Use **Amazon B2C Report** CSV with columns:
