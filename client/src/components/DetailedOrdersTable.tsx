@@ -17,11 +17,6 @@ export function DetailedOrdersTable({ rows }: DetailedOrdersTableProps) {
   const [filterSku, setFilterSku] = useState('');
 
   const taxTypes = useMemo(() => [...new Set(rows.map((r) => r.taxType))].sort(), [rows]);
-  const states = useMemo(
-    () =>
-      [...new Set(rows.flatMap((r) => [r.originState, r.destinationState]))].sort(),
-    [rows]
-  );
 
   const filteredRows = useMemo(() => {
     return rows.filter((row) => {

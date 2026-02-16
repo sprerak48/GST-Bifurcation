@@ -3,8 +3,8 @@ import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import { uploadCSV } from './api';
 import type { UploadResponse } from './types';
 import { FileUpload } from './components/FileUpload';
-import { DetailedOrdersTable } from './components/DetailedOrdersTable';
 import { GstSummaryTabs } from './components/GstSummaryTabs';
+import { AIAgent } from './components/AIAgent';
 
 function App() {
   const [data, setData] = useState<UploadResponse | null>(null);
@@ -84,6 +84,8 @@ function App() {
             <span>{error}</span>
           </div>
         )}
+
+        <AIAgent data={data} />
 
         {data && (
           <div className="mt-10">

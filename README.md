@@ -11,6 +11,7 @@ Production-ready web application for **Automated GST Bifurcation** for multi-sta
 - **Summary Tables** — Origin/Destination pairs, Compliance by state
 - **Export** — Detailed line-item and state-wise summary in XLSX or CSV
 - **Large Files** — Streaming parser supports 10k–100k+ rows
+- **AI Assistant** — Ask questions about your GST data (powered by Gemini)
 
 ## Tech Stack
 
@@ -31,6 +32,10 @@ Production-ready web application for **Automated GST Bifurcation** for multi-sta
 # Install dependencies
 npm install
 cd client && npm install && cd ..
+
+# (Optional) Add Gemini API key for AI assistant
+cp .env.example .env
+# Edit .env and set GEMINI_API_KEY=your_key
 
 # Run both backend and frontend (recommended)
 npm run dev
@@ -100,6 +105,23 @@ All amounts rounded to 2 decimal places.
 3. Switch tabs: Detailed Orders | GST Summary | Compliance Summary
 4. Filter/sort by state, tax type, SKU
 5. Export as XLSX or CSV
+6. Click the chat icon (bottom-right) to ask the AI about your data
+
+## AI Assistant
+
+The app includes an AI agent (Gemini) that answers questions about your uploaded GST data. Examples:
+
+- "What is my total GST liability by state?"
+- "Which states have the most IGST?"
+- "Summarize the CGST vs IGST distribution"
+
+Add your Gemini API key to `.env`:
+
+```
+GEMINI_API_KEY=your_key_here
+```
+
+Get a key at [Google AI Studio](https://aistudio.google.com/apikey).
 
 ## Project Structure
 
@@ -114,6 +136,7 @@ GST-AI/
 │   └── ...
 ├── server/
 │   ├── services/
+│   │   ├── aiAgent.js
 │   │   ├── csvParser.js
 │   │   ├── taxCalculator.js
 │   │   ├── aggregator.js

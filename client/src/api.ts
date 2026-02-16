@@ -53,3 +53,19 @@ export async function exportStatePairs(format: 'xlsx' | 'csv', data: unknown[]):
   });
   return handleExportResponse(res);
 }
+
+export async function askAI(question: string, dataContext: unknown): Promise<string> {
+  const res = await fetch(`${API_BASE}/ask`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ question, dataContext }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ error: res.statusText }));
+    throw new Error(err.error || 'AI request failed');
+  }
+
+  const { answer } = await res.json();
+  return answer;
+}

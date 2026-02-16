@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Upload, FileSpreadsheet, X } from 'lucide-react';
+import { FileSpreadsheet, X } from 'lucide-react';
 
 interface FileUploadProps {
   onFileSelect: (file: File) => void;
@@ -14,7 +14,7 @@ export function FileUpload({
   onFileSelect,
   loading,
   validationStatus,
-  error,
+  error: _error,
   onReset,
   hasData,
 }: FileUploadProps) {

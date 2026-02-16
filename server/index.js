@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
@@ -14,6 +15,7 @@ import {
   exportStateCombinationXlsx,
   exportStateCombinationCsv,
 } from './services/exporter.js';
+import { askQuestion } from './services/aiAgent.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -117,6 +119,23 @@ app.post('/api/export/summary', express.json(), (req, res) => {
   } catch (err) {
     console.error('Export error:', err);
     res.status(500).json({ error: err.message || 'Export failed' });
+  }
+});
+
+app.post('/api/ask', express.json(), async (req, res) => {
+  try {
+    const { question, dataContext } = req.body;
+    if (!question || typeof question !== 'string') {
+      return res.status(400).json({ error: 'Question is required' });
+    }
+
+    const answer = await askQuestion(question.trim(), dataContext || null);
+    res.json({ answer });
+  } catch (err) {
+    console.error('AI ask error:', err);
+    res.status(500).json({
+      error: err.message || 'Failed to get AI response',
+    });
   }
 });
 
