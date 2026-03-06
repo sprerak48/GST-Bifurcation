@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { FileDown, FileSpreadsheet } from 'lucide-react';
-import { exportDetailed, exportSummary, exportStatePairs } from '../api';
 import type { ProcessedRow, StateCombinationSummary, StateComplianceSummary } from '../types';
 import { DetailedOrdersTable } from './DetailedOrdersTable';
 import { SummaryTable } from './SummaryTable';
 import { ComplianceSummary } from './ComplianceSummary';
+import { exportComplianceClient, exportDetailedClient, exportStatePairsClient } from '../utils/export';
 
 interface GstSummaryTabsProps {
   processedRows: ProcessedRow[];
@@ -23,13 +23,7 @@ export function GstSummaryTabs({
 
   const handleExportDetailed = async (format: 'xlsx' | 'csv') => {
     try {
-      const blob = await exportDetailed(format, processedRows);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `gst-detailed-report.${format}`;
-      a.click();
-      URL.revokeObjectURL(url);
+      exportDetailedClient(format, processedRows);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Export failed');
     }
@@ -37,13 +31,7 @@ export function GstSummaryTabs({
 
   const handleExportSummary = async (format: 'xlsx' | 'csv') => {
     try {
-      const blob = await exportSummary(format, stateComplianceSummary);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `gst-state-summary.${format}`;
-      a.click();
-      URL.revokeObjectURL(url);
+      exportComplianceClient(format, stateComplianceSummary);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Export failed');
     }
@@ -51,13 +39,7 @@ export function GstSummaryTabs({
 
   const handleExportStatePairs = async (format: 'xlsx' | 'csv') => {
     try {
-      const blob = await exportStatePairs(format, stateCombinationSummary);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `gst-state-pairs-summary.${format}`;
-      a.click();
-      URL.revokeObjectURL(url);
+      exportStatePairsClient(format, stateCombinationSummary);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Export failed');
     }
