@@ -25,7 +25,10 @@ export function GstSummaryTabs({
     try {
       exportDetailedClient(format, processedRows);
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Export failed');
+      // DOMException isn't always instanceof Error in browsers
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error('Detailed export failed:', err);
+      alert(msg || 'Export failed');
     }
   };
 
@@ -33,7 +36,9 @@ export function GstSummaryTabs({
     try {
       exportComplianceClient(format, stateComplianceSummary);
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Export failed');
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error('Compliance export failed:', err);
+      alert(msg || 'Export failed');
     }
   };
 
@@ -41,7 +46,9 @@ export function GstSummaryTabs({
     try {
       exportStatePairsClient(format, stateCombinationSummary);
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Export failed');
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error('State pairs export failed:', err);
+      alert(msg || 'Export failed');
     }
   };
 

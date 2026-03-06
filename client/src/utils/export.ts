@@ -37,8 +37,8 @@ export function exportDetailedClient(format: 'xlsx' | 'csv', rows: ProcessedRow[
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'GST Detailed Report');
-    const out = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-    downloadBlob(new Blob([out], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), 'gst-detailed-report.xlsx');
+    // More reliable cross-browser download than Blob URLs
+    XLSX.writeFile(wb, 'gst-detailed-report.xlsx', { bookType: 'xlsx' });
     return;
   }
 
@@ -95,8 +95,7 @@ export function exportStatePairsClient(format: 'xlsx' | 'csv', rows: StateCombin
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'State Pairs Summary');
-    const out = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-    downloadBlob(new Blob([out], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), 'gst-state-pairs-summary.xlsx');
+    XLSX.writeFile(wb, 'gst-state-pairs-summary.xlsx', { bookType: 'xlsx' });
     return;
   }
 
@@ -132,8 +131,7 @@ export function exportComplianceClient(format: 'xlsx' | 'csv', rows: StateCompli
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'State GST Summary');
-    const out = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-    downloadBlob(new Blob([out], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), 'gst-state-summary.xlsx');
+    XLSX.writeFile(wb, 'gst-state-summary.xlsx', { bookType: 'xlsx' });
     return;
   }
 
